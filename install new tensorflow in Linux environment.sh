@@ -18,3 +18,20 @@ pip install -U pip six numpy wheel mock
 pip install -U keras_applications==1.0.5 --no-deps
 pip install -U keras_preprocessing==1.0.3 --no-deps
 
+# when running the tensorflow in ImportError: /lib64/libc.so.6: version `GLIBC_2.17' not found
+wget https://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.gz
+tar -xvf glibc-2.17.tar.gz
+
+cd glibc-2.17
+mkdir build
+cd build
+../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin
+make && make install
+
+ll /lib64/libc.so.6
+
+lrwxrwxrwx 1 root root  
+/lib64/libc.so.6 -> libc-2.17.so
+strings /lib64/libc.so.6 |grep GLIBC_
+
+
